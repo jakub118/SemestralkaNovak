@@ -5,11 +5,11 @@ async function loadProducts() {
   const products = await res.json();
   const container = document.getElementById('products');
   container.innerHTML = '';
-  products.forEach(p => {
-    const item = document.createElement('div');
-    item.innerHTML = `${p.name} - $${p.price} <button onclick='addToCart(${JSON.stringify(p)})'>Add</button>`;
-    container.appendChild(item);
-  });
+products.forEach(p => {
+  const item = document.createElement('div');
+  item.innerHTML = `<button onclick='addToCart(${JSON.stringify(p)})'>${p.name} - $${p.price}</button>`;
+  container.appendChild(item);
+});
 }
 
 function addToCart(product) {
