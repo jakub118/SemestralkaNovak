@@ -57,3 +57,4 @@ async function loadOrders() {
     container.appendChild(div);
   });
 }
+loadProducts()
