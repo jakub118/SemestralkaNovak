@@ -34,14 +34,14 @@ async function addProduct() {
   alert(data.success ? 'Product added' : 'Failed to add');
 }
 
-async function loadProducts(params) {
+async function loadProducts() {
     const res = await fetch('/api/products');
   const products = await res.json();
   const container = document.getElementById('products');
   container.innerHTML = '';
  products.forEach(p => {
   const item = document.createElement('div');
-  item.innerHTML = `<button onclick='addToCart(${JSON.stringify(p)})'>${p.name} - $${p.price}</button>`;
+  item.innerHTML = `${p.name} - $${p.price}`;
   container.appendChild(item);
 });
 }
