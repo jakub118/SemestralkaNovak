@@ -3,6 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Panel</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f7f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2 {
+      color: #2d3a4b;
+      margin-bottom: 10px;
+    }
+    #adminPanel {
+      background: #fff;
+      max-width: 600px;
+      margin: 40px auto 0 auto;
+      padding: 32px 32px 24px 32px;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+    input[type="text"], input[type="password"], input[type="number"] {
+      padding: 8px 10px;
+      margin: 6px 8px 6px 0;
+      border: 1px solid #cfd8dc;
+      border-radius: 5px;
+      font-size: 1em;
+      background: #f9f9fb;
+      transition: border 0.2s;
+    }
+    input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus {
+      border: 1.5px solid #1976d2;
+      outline: none;
+      background: #fff;
+    }
+    button {
+      padding: 7px 16px;
+      margin: 6px 6px 6px 0;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #125ea8;
+    }
+    #adminProducts > div, #orders > div {
+      background: #f1f5fb;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1em;
+    }
+    #adminProducts button, #orders button {
+      margin-left: 8px;
+      font-size: 0.95em;
+      padding: 5px 12px;
+    }
+    #salesStats {
+      margin: 18px 0 10px 0;
+      font-size: 1em;
+      color: #333;
+    }
+    #salesChart {
+      display: block;
+      margin: 0 auto 10px auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      padding: 10px;
+      width: 220px !important;
+      height: 220px !important;
+    }
+    @media (max-width: 700px) {
+      #adminPanel {
+        max-width: 98vw;
+        padding: 10px;
+      }
+      #salesChart {
+        width: 98vw !important;
+        height: 200px !important;
+      }
+    }
+  </style>
 </head>
 <body>
   <h1>Admin Login</h1>
