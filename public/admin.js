@@ -34,6 +34,18 @@ async function addProduct() {
   alert(data.success ? 'Product added' : 'Failed to add');
 }
 
+async function loadProducts(params) {
+    const res = await fetch('/api/products');
+  const products = await res.json();
+  const container = document.getElementById('products');
+  container.innerHTML = '';
+ products.forEach(p => {
+  const item = document.createElement('div');
+  item.innerHTML = `<button onclick='addToCart(${JSON.stringify(p)})'>${p.name} - $${p.price}</button>`;
+  container.appendChild(item);
+});
+}
+
 async function loadOrders() {
   const res = await fetch('/api/admin/orders');
   const orders = await res.json();
@@ -45,4 +57,3 @@ async function loadOrders() {
     container.appendChild(div);
   });
 }
-loadProducts();
