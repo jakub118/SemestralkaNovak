@@ -45,21 +45,7 @@ async function loadProducts() {
   products.forEach(p => {
     const div = document.createElement('div');
     div.textContent = `${p.name} - $${p.price} `;
-
-    // Delete button
-    const btn = document.createElement('button');
-    btn.textContent = 'Delete';
-    btn.onclick = async () => {
-      if (confirm('Delete this product?')) {
-        await fetch('/api/admin/delete-product', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: p.id })
-        });
-        loadProducts();
-      }
-    };
-    div.appendChild(btn);
+  
 
     const editBtn = document.createElement('button');
     editBtn.textContent = 'Edit';
@@ -90,9 +76,24 @@ async function loadProducts() {
       div.appendChild(cancelBtn);
     };
     div.appendChild(editBtn);
+    const delBtn = document.createElement('button');
+  delBtn.textContent = 'Delete';
+  delBtn.style.background = '#e53935';
+  delBtn.onclick = async () => {
+    if (confirm('Delete this product?')) {
+      await fetch('/api/admin/delete-product', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: p.id })
+      });
+      loadProducts();
+    }
+  };
 
-    container.appendChild(div);
-  });
+  div.appendChild(editBtn);
+  div.appendChild(delBtn);
+  container.appendChild(div);
+});
 }
 
 async function loadOrders() {
