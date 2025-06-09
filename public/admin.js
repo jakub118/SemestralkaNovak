@@ -103,9 +103,27 @@ async function loadOrders() {
   orders.forEach(order => {
     const div = document.createElement('div');
     div.textContent = `Address: ${order.address} | Items: ${order.items.map(i => i.name).join(', ')}`;
+
+    // Delete button
+    const delBtn = document.createElement('button');
+    delBtn.textContent = 'Delete';
+    delBtn.style.background = '#e53935';
+    delBtn.onclick = async () => {
+      if (confirm('Delete this order?')) {
+        await fetch('/api/admin/delete-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: order.id })
+        });
+        loadOrders();
+        loadSalesStats && loadSalesStats();
+      }
+    };
+    div.appendChild(delBtn);
+
     container.appendChild(div);
   });
-  loadSalesStats();
+  loadSalesStats && loadSalesStats();
 }
 
 async function loadSalesStats() {
