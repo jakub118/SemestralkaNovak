@@ -112,7 +112,7 @@ async function loadOrders() {
     // Delete button
     const delBtn = document.createElement('button');
     delBtn.textContent = 'Delete';
-    delBtn.style.background = '#e53935';
+    delBtn.className = 'btn btn-danger btn-sm rounded';
     delBtn.onclick = async () => {
       if (confirm('Delete this order?')) {
         await fetch('/api/admin/delete-order', {
