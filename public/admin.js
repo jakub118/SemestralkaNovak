@@ -45,8 +45,8 @@ async function loadProducts() {
   products.forEach(p => {
     const div = document.createElement('div');
     div.textContent = `${p.name} - $${p.price} `;
-  
-    
+
+
     // Edit button
     const editBtn = document.createElement('button');
     editBtn.textContent = 'Edit';
@@ -79,25 +79,25 @@ async function loadProducts() {
     };
     div.appendChild(editBtn);
 
-  // Delete button
-  const delBtn = document.createElement('button');
-  delBtn.textContent = 'Delete';
-  delBtn.className = 'btn btn-danger btn-sm rounded';
-  delBtn.onclick = async () => {
-    if (confirm('Delete this product?')) {
-      await fetch('/api/admin/delete-product', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: p.id })
-      });
-      loadProducts();
-    }
-  };
+    // Delete button
+    const delBtn = document.createElement('button');
+    delBtn.textContent = 'Delete';
+    delBtn.className = 'btn btn-danger btn-sm rounded';
+    delBtn.onclick = async () => {
+      if (confirm('Delete this product?')) {
+        await fetch('/api/admin/delete-product', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: p.id })
+        });
+        loadProducts();
+      }
+    };
 
-  div.appendChild(editBtn);
-  div.appendChild(delBtn);
-  container.appendChild(div);
-});
+    div.appendChild(editBtn);
+    div.appendChild(delBtn);
+    container.appendChild(div);
+  });
 }
 
 async function loadOrders() {
@@ -135,7 +135,7 @@ async function loadSalesStats() {
   const res = await fetch('/api/admin/orders');
   const orders = await res.json();
 
-  // Spočítat prodané kusy podle názvu produktu
+  // count products sold
   const productCounts = {};
   orders.forEach(order => {
     order.items.forEach(item => {
@@ -144,45 +144,45 @@ async function loadSalesStats() {
     });
   });
 
-  // Zobrazit statistiku
+  // show statistics
   const statsDiv = document.getElementById('salesStats');
   statsDiv.innerHTML = '<b>Sold products:</b><br>' +
-    Object.entries(productCounts).map(([name, count]) => `${name}: ${count}ks`).join('<br>');
+    Object.entries(productCounts).map(([name, count]) => `${name}: ${count}x`).join('<br>');
 
-  // Vykreslit graf pomocí Chart.js
-const ctx = document.getElementById('salesChart').getContext('2d');
-if (window.salesChartInstance) window.salesChartInstance.destroy();
-window.salesChartInstance = new Chart(ctx, {
-  type: 'pie',
-  data: {
-    labels: Object.keys(productCounts),
-    datasets: [{
-      label: 'Sold products',
-      data: Object.values(productCounts),
-      backgroundColor: [
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
-      ]
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'bottom'
-      },
-      datalabels: {
-        color: '#222',
-        font: { weight: 'bold' },
-        formatter: (value, context) => context.chart.data.labels[context.dataIndex]
+  // show graph
+  const ctx = document.getElementById('salesChart').getContext('2d');
+  if (window.salesChartInstance) window.salesChartInstance.destroy();
+  window.salesChartInstance = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: Object.keys(productCounts),
+      datasets: [{
+        label: 'Sold products',
+        data: Object.values(productCounts),
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(255, 99, 132, 0.5)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(75, 192, 192, 0.5)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, 159, 64, 0.5)'
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        },
+        datalabels: {
+          color: '#222',
+          font: { weight: 'bold' },
+          formatter: (value, context) => context.chart.data.labels[context.dataIndex]
+        }
       }
-    }
-  },
-  plugins: [ChartDataLabels]
+    },
+    plugins: [ChartDataLabels]
 
-});
+  });
 }
