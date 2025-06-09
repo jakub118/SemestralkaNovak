@@ -36,6 +36,7 @@ function updateCart() {
     const plusBtn = document.createElement('button');
     plusBtn.textContent = '+';
     plusBtn.className = 'btn btn-primary btn-sm rounded';
+    plusBtn.style.marginLeft = '5px';
     plusBtn.onclick = () => {
       p.count++;
       updateCart();
