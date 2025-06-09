@@ -3,6 +3,109 @@
 <head>
     <meta charset="UTF-8" />
     <title>Phone store</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #f7f7fa;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        color: #1976d2;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
+      }
+      #products {
+        max-width: 700px;
+        margin: 0 auto 30px auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        justify-content: center;
+      }
+      #products > div {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+        padding: 18px 20px;
+        min-width: 180px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #products button {
+        background: #1976d2;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 18px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      #products button:hover {
+        background: #125ea8;
+      }
+      h2 {
+        color: #2d3a4b;
+        margin-left: 10vw;
+        margin-bottom: 8px;
+      }
+      #cart {
+        max-width: 700px;
+        margin: 0 auto 20px auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+        padding: 16px 20px;
+        min-height: 40px;
+        font-size: 1.1em;
+      }
+      #cart > div {
+        margin-bottom: 6px;
+      }
+      button {
+        background: #1976d2;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 18px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      button:hover {
+        background: #125ea8;
+      }
+      #addressForm {
+        max-width: 700px;
+        margin: 0 auto;
+        background: #f1f5fb;
+        border-radius: 10px;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+        padding: 16px 20px;
+        margin-top: 15px;
+      }
+      #address {
+        padding: 8px 10px;
+        border: 1px solid #cfd8dc;
+        border-radius: 5px;
+        font-size: 1em;
+        margin-right: 10px;
+      }
+      @media (max-width: 800px) {
+        #products, #cart, #addressForm {
+          max-width: 98vw;
+          padding: 10px;
+        }
+        h2 {
+          margin-left: 2vw;
+        }
+      }
+    </style>
 </head>
 <body>
     <h1>Phones</h1>
