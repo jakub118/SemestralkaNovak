@@ -1,4 +1,4 @@
-let loggedIn = true;
+let loggedIn = false;
 
 async function login() {
   const username = document.getElementById('user').value;
