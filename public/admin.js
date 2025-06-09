@@ -147,7 +147,7 @@ async function loadSalesStats() {
   // Zobrazit statistiku
   const statsDiv = document.getElementById('salesStats');
   statsDiv.innerHTML = '<b>Sold products:</b><br>' +
-    Object.entries(productCounts).map(([name, count]) => `${name}: ${count}`).join('<br>');
+    Object.entries(productCounts).map(([name, count]) => `${name}: ${count}ks`).join('<br>');
 
   // Vykreslit graf pomocí Chart.js
 const ctx = document.getElementById('salesChart').getContext('2d');
