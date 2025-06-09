@@ -46,9 +46,11 @@ async function loadProducts() {
     const div = document.createElement('div');
     div.textContent = `${p.name} - $${p.price} `;
   
-
+    
+    // Edit button
     const editBtn = document.createElement('button');
     editBtn.textContent = 'Edit';
+    editBtn.className = 'btn btn-secondary btn-sm rounded';
     editBtn.onclick = () => {
       // Replace text with input fields
       div.innerHTML = '';
@@ -76,9 +78,11 @@ async function loadProducts() {
       div.appendChild(cancelBtn);
     };
     div.appendChild(editBtn);
-    const delBtn = document.createElement('button');
+
+  // Delete button
+  const delBtn = document.createElement('button');
   delBtn.textContent = 'Delete';
-  delBtn.style.background = '#e53935';
+  delBtn.className = 'btn btn-danger btn-sm rounded';
   delBtn.onclick = async () => {
     if (confirm('Delete this product?')) {
       await fetch('/api/admin/delete-product', {
