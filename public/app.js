@@ -45,7 +45,7 @@ function updateCart() {
     // Remove button
     const removeBtn = document.createElement('button');
     removeBtn.textContent = 'Remove';
-    removeBtn.style.background = '#e53935';
+    removeBtn.className = 'btn btn-danger btn-sm rounded';
     removeBtn.style.marginLeft = '10px';
     removeBtn.onclick = () => {
       cart.splice(i, 1);
