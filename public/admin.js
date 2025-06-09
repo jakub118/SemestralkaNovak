@@ -44,6 +44,8 @@ async function loadProducts() {
   products.forEach(p => {
     const div = document.createElement('div');
     div.textContent = `${p.name} - $${p.price} `;
+
+    // Delete button
     const btn = document.createElement('button');
     btn.textContent = 'Delete';
     btn.onclick = async () => {
@@ -57,6 +59,37 @@ async function loadProducts() {
       }
     };
     div.appendChild(btn);
+
+    const editBtn = document.createElement('button');
+    editBtn.textContent = 'Edit';
+    editBtn.onclick = () => {
+      // Replace text with input fields
+      div.innerHTML = '';
+      const nameInput = document.createElement('input');
+      nameInput.value = p.name;
+      const priceInput = document.createElement('input');
+      priceInput.type = 'number';
+      priceInput.value = p.price;
+      const saveBtn = document.createElement('button');
+      saveBtn.textContent = 'Save';
+      saveBtn.onclick = async () => {
+        await fetch('/api/admin/edit-product', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: p.id, name: nameInput.value, price: parseFloat(priceInput.value) })
+        });
+        loadProducts();
+      };
+      const cancelBtn = document.createElement('button');
+      cancelBtn.textContent = 'Cancel';
+      cancelBtn.onclick = loadProducts;
+      div.appendChild(nameInput);
+      div.appendChild(priceInput);
+      div.appendChild(saveBtn);
+      div.appendChild(cancelBtn);
+    };
+    div.appendChild(editBtn);
+
     container.appendChild(div);
   });
 }
