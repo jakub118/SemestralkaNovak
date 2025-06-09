@@ -126,31 +126,33 @@ async function loadSalesStats() {
   statsDiv.innerHTML = '<b>Sold products:</b><br>' +
     Object.entries(productCounts).map(([name, count]) => `${name}: ${count}`).join('<br>');
 
-  // Data pro graf: podle data objednávky
-  const salesByDate = {};
-  orders.forEach(order => {
-    const date = order.date ? order.date.slice(0, 10) : 'unknown';
-    if (!salesByDate[date]) salesByDate[date] = 0;
-    salesByDate[date] += order.items.length;
-  });
-
   // Vykreslit graf pomocí Chart.js
-  const ctx = document.getElementById('salesChart').getContext('2d');
-  if (window.salesChartInstance) window.salesChartInstance.destroy();
-  window.salesChartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: Object.keys(salesByDate),
-      datasets: [{
-        label: 'Products sold per day',
-        data: Object.values(salesByDate),
-        backgroundColor: 'rgba(54, 162, 235, 0.5)'
-      }]
-    },
-    options: {
-      scales: {
-        y: { beginAtZero: true }
+const ctx = document.getElementById('salesChart').getContext('2d');
+if (window.salesChartInstance) window.salesChartInstance.destroy();
+window.salesChartInstance = new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: Object.keys(productCounts),
+    datasets: [{
+      label: 'Sold products',
+      data: Object.values(productCounts),
+      backgroundColor: [
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ]
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom'
       }
     }
-  });
+  }
+});
 }
