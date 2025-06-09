@@ -151,8 +151,15 @@ window.salesChartInstance = new Chart(ctx, {
     plugins: {
       legend: {
         position: 'bottom'
+      },
+      datalabels: {
+        color: '#222',
+        font: { weight: 'bold' },
+        formatter: (value, context) => context.chart.data.labels[context.dataIndex]
       }
     }
-  }
+  },
+  plugins: [ChartDataLabels]
+
 });
 }
