@@ -1,4 +1,4 @@
-let loggedIn = false;
+let loggedIn = true;
 
 async function login() {
   const username = document.getElementById('user').value;
@@ -33,7 +33,7 @@ async function addProduct() {
   const data = await res.json();
   alert(data.success ? 'Product added' : 'Failed to add');
 }
-
+loadProducts();
 async function loadOrders() {
   const res = await fetch('/api/admin/orders');
   const orders = await res.json();
