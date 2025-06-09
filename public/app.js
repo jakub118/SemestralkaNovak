@@ -55,10 +55,8 @@ function updateCart() {
   });
 }
 
-// Uprav submitOrder, aby posílal správně počty kusů
 async function submitOrder() {
   const address = document.getElementById('address').value;
-  // Rozbal produkty podle počtu kusů
   const items = cart.flatMap(p => Array.from({ length: p.count }, () => ({ id: p.id, name: p.name, price: p.price })));
   const res = await fetch('/api/order', {
     method: 'POST',
@@ -66,7 +64,12 @@ async function submitOrder() {
     body: JSON.stringify({ address, items })
   });
   const data = await res.json();
-  if (data.success) alert('Order placed!');
+  if (data.success) {
+    alert('Order placed!');
+    cart = [];           // Vynulování košíku
+    updateCart();        // Aktualizace zobrazení
+    document.getElementById('addressForm').style.display = 'none'; // Skrytí formuláře
+  }
 }
 
 async function loadProducts() {
