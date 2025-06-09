@@ -16,6 +16,7 @@ async function login() {
     document.getElementById('adminPanel').style.display = 'block';
     loadOrders();
     loadProducts();
+    loadSalesStats();
   } else {
     alert('Login failed');
   }
@@ -103,5 +104,53 @@ async function loadOrders() {
     const div = document.createElement('div');
     div.textContent = `Address: ${order.address} | Items: ${order.items.map(i => i.name).join(', ')}`;
     container.appendChild(div);
+  });
+  loadSalesStats();
+}
+
+async function loadSalesStats() {
+  const res = await fetch('/api/admin/orders');
+  const orders = await res.json();
+
+  // Spočítat prodané kusy podle názvu produktu
+  const productCounts = {};
+  orders.forEach(order => {
+    order.items.forEach(item => {
+      if (!productCounts[item.name]) productCounts[item.name] = 0;
+      productCounts[item.name]++;
+    });
+  });
+
+  // Zobrazit statistiku
+  const statsDiv = document.getElementById('salesStats');
+  statsDiv.innerHTML = '<b>Sold products:</b><br>' +
+    Object.entries(productCounts).map(([name, count]) => `${name}: ${count}`).join('<br>');
+
+  // Data pro graf: podle data objednávky
+  const salesByDate = {};
+  orders.forEach(order => {
+    const date = order.date ? order.date.slice(0, 10) : 'unknown';
+    if (!salesByDate[date]) salesByDate[date] = 0;
+    salesByDate[date] += order.items.length;
+  });
+
+  // Vykreslit graf pomocí Chart.js
+  const ctx = document.getElementById('salesChart').getContext('2d');
+  if (window.salesChartInstance) window.salesChartInstance.destroy();
+  window.salesChartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(salesByDate),
+      datasets: [{
+        label: 'Products sold per day',
+        data: Object.values(salesByDate),
+        backgroundColor: 'rgba(54, 162, 235, 0.5)'
+      }]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
   });
 }
