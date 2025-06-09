@@ -15,6 +15,7 @@ async function login() {
     loggedIn = true;
     document.getElementById('adminPanel').style.display = 'block';
     loadOrders();
+    loadProducts();
   } else {
     alert('Login failed');
   }
@@ -32,6 +33,32 @@ async function addProduct() {
 
   const data = await res.json();
   alert(data.success ? 'Product added' : 'Failed to add');
+  if (data.success) loadProducts();
+}
+
+async function loadProducts() {
+  const res = await fetch('/api/products');
+  const products = await res.json();
+  const container = document.getElementById('adminProducts');
+  container.innerHTML = '';
+  products.forEach(p => {
+    const div = document.createElement('div');
+    div.textContent = `${p.name} - $${p.price} `;
+    const btn = document.createElement('button');
+    btn.textContent = 'Delete';
+    btn.onclick = async () => {
+      if (confirm('Delete this product?')) {
+        await fetch('/api/admin/delete-product', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: p.id })
+        });
+        loadProducts();
+      }
+    };
+    div.appendChild(btn);
+    container.appendChild(div);
+  });
 }
 
 async function loadOrders() {
