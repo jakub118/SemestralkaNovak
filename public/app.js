@@ -5,7 +5,7 @@ async function loadProducts() {
   const products = await res.json();
   const container = document.getElementById('products');
   container.innerHTML = '';
-products.forEach(p => {
+ products.forEach(p => {
   const item = document.createElement('div');
   item.innerHTML = `<button onclick='addToCart(${JSON.stringify(p)})'>${p.name} - $${p.price}</button>`;
   container.appendChild(item);
@@ -20,9 +20,18 @@ function addToCart(product) {
 function updateCart() {
   const cartDiv = document.getElementById('cart');
   cartDiv.innerHTML = '';
-  cart.forEach(p => {
+  cart.forEach((p, i) => {
     const item = document.createElement('div');
-    item.textContent = p.name + ' - $' + p.price;
+    item.textContent = p.name + ' - $' + p.price + ' ';
+    const removeBtn = document.createElement('button');
+    removeBtn.textContent = 'Remove';
+    removeBtn.style.background = '#e53935';
+    removeBtn.style.marginLeft = '10px';
+    removeBtn.onclick = () => {
+      cart.splice(i, 1);
+      updateCart();
+    };
+    item.appendChild(removeBtn);
     cartDiv.appendChild(item);
   });
 }
