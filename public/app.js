@@ -21,6 +21,7 @@ function updateCart() {
     const minusBtn = document.createElement('button');
     minusBtn.textContent = '−';
     minusBtn.style.marginLeft = '10px';
+    minusBtn.className = 'btn btn-primary btn-sm rounded';
     minusBtn.onclick = () => {
       if (p.count > 1) {
         p.count--;
@@ -34,6 +35,7 @@ function updateCart() {
     // Plus button
     const plusBtn = document.createElement('button');
     plusBtn.textContent = '+';
+    plusBtn.className = 'btn btn-primary btn-sm rounded';
     plusBtn.onclick = () => {
       p.count++;
       updateCart();
@@ -66,9 +68,9 @@ async function submitOrder() {
   const data = await res.json();
   if (data.success) {
     alert('Order placed!');
-    cart = [];           // Vynulování košíku
-    updateCart();        // Aktualizace zobrazení
-    document.getElementById('addressForm').style.display = 'none'; // Skrytí formuláře
+    cart = [];           //delete cart
+    updateCart();        //refresh
+    document.getElementById('addressForm').style.display = 'none'; // hide address form
   }
 }
 
