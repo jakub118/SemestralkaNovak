@@ -85,7 +85,8 @@ async function loadProducts() {
     col.className = 'col-12 col-sm-6 col-md-4 col-lg-3';
     const item = document.createElement('div');
     item.className = 'd-flex flex-column align-items-center';
-    item.innerHTML = `<button class="btn btn-outline-primary w-100 mb-2" style="font-size:0.95em; padding:8px 0;" onclick='addToCart(${JSON.stringify(p)})'>${p.name} - $${p.price}</button>`;
+    item.innerHTML = `<button class="btn btn-outline-primary w-100 mb-2" onclick='addToCart(${JSON.stringify(p)})'>${p.name} - $${p.price}</button>`;
+    item.style.padding = '10px';
     col.appendChild(item);
     container.appendChild(col);
   });
